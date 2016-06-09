@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/easeljs-0.7.0.min.js"></script>
+    <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
+    <script src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/entity/CarEntity.js"></script>
+    <script src="js/entity/cars/MainCarEntity.js"></script>
+    <script src="js/entity/cars/Movements.js"></script>
+    <script>
+        function init() {
+            manifest = [
+                {src: "bg/sand.png", id: "ground"}
+            ];
+            loader = new createjs.LoadQueue(false);
+            var game = new Game("canvas", loader);
+            loader.addEventListener("complete", game.init);
+            loader.loadManifest(manifest, true, "textures/");
+        }
+    </script>
+</head>
+<body onload="init();">
+<canvas id="canvas">
+    alternate content
+</canvas>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "dev4u-canvas-test",
+  "version": "0.0.0",
+  "description": "Canvas test",
+  "authors": [
+    "Tereshchenko Maxim <enot.work@gmail.com>"
+  ],
+  "licence": "MIT",
+  "dependencies": {
+    "easeljs": "*"
+  }
+}

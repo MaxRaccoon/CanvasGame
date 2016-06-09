@@ -1,0 +1,16 @@
+{
+  "name": "dev4u-canvas-test",
+  "version": "0.0.0",
+  "description": "Canvas test",
+  "main": "index.html",
+  "author": "Tereshchenko Maxim",
+  "licence": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "browserify": "^4.1.11",
+    "grunt-browserify": "^2.1.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-connect": "^0.8.0"
+  }
+}
