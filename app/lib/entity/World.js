@@ -33,7 +33,7 @@ function World$initialize(sizeX, sizeY) {
 }
 
 function setupDisplay() {
-    var blockSizePx = 50;
+    var blockSizePx = 100;
     for (var index in this.centerPoints) {
         var item = this.centerPoints[index];
         if (item.noise>0) {
