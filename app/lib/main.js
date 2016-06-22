@@ -37,16 +37,22 @@ domReady(function() {
       if (typeof controls.HELD[controls.LEFT_KEYCODE] != typeof undefined
             && controls.HELD[controls.LEFT_KEYCODE]) {
          heroObj.getCar().rotate(-1);
+         controls.HELD[controls.LEFT_KEYCODE] = false;
       }
       if (typeof controls.HELD[controls.RIGHT_KEYCODE] != typeof undefined
           && controls.HELD[controls.RIGHT_KEYCODE]) {
          heroObj.getCar().rotate(1);
+         controls.HELD[controls.RIGHT_KEYCODE] = false;
       }
       if (typeof controls.HELD[controls.FORWARD_KEYCODE] != typeof undefined
           && controls.HELD[controls.FORWARD_KEYCODE]) {
+         controls.HELD[controls.FORWARD_KEYCODE] = false;
          heroObj.getCar().accelerate();
       }
       heroObj.getCar().tick();
+      var center = heroObj.getCar().getCenterCoord();
+      worldObj.regX = center[0];
+      worldObj.regY = center[1];
       stage.update();
    });
    document.onkeydown = handleKeyDown;

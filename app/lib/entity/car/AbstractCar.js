@@ -4,16 +4,18 @@ var createSubClass = require('../../utils/create_subclass')
     , Container = createjs.Container
     , TOGGLE = 60
     , MAX_THRUST = 2
-    , MAX_VELOCITY = 2;
+    , MAX_VELOCITY = 5;
 
 module.exports = createSubClass(Container, 'AbstractCar', {
     initialize: AbstractCar$initialize,
     getContainer: AbstractCar$getContainer,
     rotate: AbstractCar$rotate,
     accelerate: AbstractCar$accelerate,
+    braking: AbstractCar$braking,
     getRotation: AbstractCar$getRotation,
     prepare: AbstractCar$prepare,
-    tick: AbstractCar$tick
+    tick: AbstractCar$tick,
+    getCenterCoord: AbstractCar$getCenterCoord
 });
 
 function AbstractCar$initialize() {
@@ -25,6 +27,7 @@ function AbstractCar$prepare(name, type, wheelCount, carcass, hitBox) {
     this.container.y = 0;
 
     this.thrust = 0;
+    this.speed = 0;
     this.vX = 0;
     this.vY = 0;
 
@@ -99,17 +102,23 @@ function AbstractCar$rotate(direction) {
 }
 
 function AbstractCar$accelerate() {
-    this.thrust += this.thrust + 1;
+    //increase push ammount for acceleration
+    this.thrust += this.thrust + 0.6;
     if (this.thrust >= MAX_THRUST) {
         this.thrust = MAX_THRUST;
     }
 
     //accelerate
-    this.vX += Math.sin(this.container.rotation * (Math.PI / -180));
-    this.vY += Math.cos(this.container.rotation * (Math.PI / -180));
+    this.vX -= Math.sin(this.getRotation() * (Math.PI / -180)) * this.thrust;
+    this.vY -= Math.cos(this.getRotation() * (Math.PI / -180)) * this.thrust;
+
     //cap max speeds
-    this.vX = Math.min(MAX_VELOCITY, this.vX);
-    this.vY = Math.min(MAX_VELOCITY, this.vY);
+    this.vX = Math.min(MAX_VELOCITY, Math.max(-MAX_VELOCITY, this.vX));
+    this.vY = Math.min(MAX_VELOCITY, Math.max(-MAX_VELOCITY, this.vY));
+}
+
+function AbstractCar$braking() {
+
 }
 
 function AbstractCar$getRotation() {
@@ -117,19 +126,13 @@ function AbstractCar$getRotation() {
 }
 
 function AbstractCar$tick() {
-    //console.log("vX2: " + this.vX);
-    //console.log("X: " + this.container.x);
-    //console.log("R: " + this.container.rotation);
+    //move by velocity
+    this.container.x += this.vX;
+    this.container.y += this.vY;
+}
 
-    if (this.thrust > 0) {
-        this.container.x -= this.vX;
-        this.container.y -= this.vY;
-        this.thrust -= 0.5;
-    } else {
-        this.thrust = 0;
-        //this.vX = 0;
-        //this.vY = 0;
-    }
+function AbstractCar$getCenterCoord() {
+    return [this.container.x, this.container.y];
 }
 
 function createWheel(sX,sY,eX,eY,posX,posY) {
